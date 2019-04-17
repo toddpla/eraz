@@ -61,7 +61,7 @@ const errorTypes = [
 module.exports = (() => {
     const errors = {};
     errorTypes.forEach(error => {
-        errors[error.name] = generator(error, HttpError);
+        errors[error.name] = generator(error);
     });
     return {
         ...errors,
