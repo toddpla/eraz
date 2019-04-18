@@ -2,7 +2,10 @@
   "name": "eraz",
   "version": "1.0.4",
   "description": "Node error handler.",
-  "main": "index.js",
+  "main": "./lib/index.js",
+  "files": [
+    "/lib"
+  ],
   "scripts": {
     "test": "npm run test"
   },
