@@ -53,7 +53,7 @@ const errorTypes = [
         code: 413,
     },
     {
-        name: 'RequestURITooLongWError',
+        name: 'RequestURITooLongError',
         code: 414,
     }
 ];
