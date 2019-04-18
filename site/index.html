@@ -53,6 +53,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#eraz">Eraz</a></li>
+            <li><a href="#installation">Installation</a></li>
             <li><a href="#usage">Usage</a></li>
             <li><a href="#http-errors">Http Errors</a></li>
             <li><a href="#middleware">Middleware</a></li>
@@ -64,6 +65,10 @@
 
 <h1 id="eraz">Eraz</h1>
 <p><strong>An error handler for Node code</strong></p>
+<h2 id="installation">Installation</h2>
+<pre><code class="sh">npm install eraz
+</code></pre>
+
 <h2 id="usage">Usage</h2>
 <p>Throw an error at some point during the request/response cycle to be handled by middleware to return the required Http response status code and attributes as JSON.</p>
 <h4 id="example">Example</h4>
@@ -270,5 +275,5 @@ if (false) throw new CustomError('Handled as a 400 but with the foo attribute in
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-04-18 09:10:36
+Build Date UTC : 2019-04-18 09:14:50
 -->

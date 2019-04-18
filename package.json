@@ -1,6 +1,6 @@
 {
   "name": "eraz",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Node error handler.",
   "main": "index.js",
   "scripts": {
