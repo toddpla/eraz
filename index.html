@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="img/favicon.ico">
-        <title>eraz</title>
+        <title>Eraz</title>
         <link href="css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/base.css" rel="stylesheet">
@@ -32,7 +32,7 @@
 
                 <!-- Collapsed navigation -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href=".">eraz</a>
+                    <a class="navbar-brand" href=".">Eraz</a>
                 </div>
 
                 <!-- Expanded navigation -->
@@ -52,28 +52,142 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#welcome-to-eraz">Welcome to eraz</a></li>
-            <li><a href="#commands">Commands</a></li>
-            <li><a href="#project-layout">Project layout</a></li>
+        <li class="main active"><a href="#eraz">Eraz</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#http-errors">Http Errors</a></li>
+            <li><a href="#middleware">Middleware</a></li>
+            <li><a href="#custom-errors">Custom Errors</a></li>
+            <li><a href="#contributtions">Contributtions</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h1 id="welcome-to-eraz">Welcome to eraz</h1>
-<p>For full documentation visit <a href="https://mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
-<ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
-<li><code>mkdocs build</code> - Build the documentation site.</li>
-<li><code>mkdocs help</code> - Print this help message.</li>
-</ul>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
-</code></pre></div>
+<h1 id="eraz">Eraz</h1>
+<p><strong>An error handler for Node code</strong></p>
+<h2 id="usage">Usage</h2>
+<p>Throw an error at some point during the request/response cycle to be handled by middleware to return the required Http response status code and attributes as JSON.</p>
+<h4 id="example">Example</h4>
+<pre><code class="js">const { BadRequestError } = require('eraz');
+
+function doSomething(data) {
+    if (data === undefined) throw new BadRequestError('No data provided.');
+    // ...else continue computation
+};
+</code></pre>
+
+<p>The Http response will include a status code of <code>400</code> along with the error message <code>No data provided.</code></p>
+<h3 id="extra-attributes">Extra attributes</h3>
+<p>An error can be instantiated with additional attributes passed in.</p>
+<h4 id="example_1">Example</h4>
+<pre><code class="js">const { BadRequestError } = require('eraz');
+
+function doSomething(data) {
+    if (data.requiredAttribute === undefined) throw new BadRequestError('Required attribute is undefined.', data);
+    // ...else continue computation
+};
+</code></pre>
+
+<p>The Http response will include a status code of <code>400</code> along with the error message <code>Required attribute is undefined.</code> and this time the object is being passed in as a parameter which will be included in the Http response as JSON.</p>
+<h2 id="http-errors">Http Errors</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BadRequestError</td>
+<td>400</td>
+</tr>
+<tr>
+<td>UnauthorizedError</td>
+<td>401</td>
+</tr>
+<tr>
+<td>ForbiddenError</td>
+<td>403</td>
+</tr>
+<tr>
+<td>NotFoundError</td>
+<td>404</td>
+</tr>
+<tr>
+<td>NotAcceptableError</td>
+<td>406</td>
+</tr>
+<tr>
+<td>ProxyAuthenticationRequiredError</td>
+<td>407</td>
+</tr>
+<tr>
+<td>RequestTimeoutError</td>
+<td>408</td>
+</tr>
+<tr>
+<td>ConflictError</td>
+<td>409</td>
+</tr>
+<tr>
+<td>GoneError</td>
+<td>410</td>
+</tr>
+<tr>
+<td>LengthRequiredError</td>
+<td>411</td>
+</tr>
+<tr>
+<td>PreconditionFailedError</td>
+<td>412</td>
+</tr>
+<tr>
+<td>RequestEntityTooLargeError</td>
+<td>413</td>
+</tr>
+<tr>
+<td>RequestURITooLongError</td>
+<td>414</td>
+</tr>
+</tbody>
+</table>
+<h2 id="middleware">Middleware</h2>
+<h3 id="express">Express</h3>
+<pre><code class="js">const express = require('express');
+const { expressHandler } = require('eraz');
+
+const app = express();
+
+app.use(expressHandler);
+</code></pre>
+
+<h2 id="custom-errors">Custom Errors</h2>
+<p>Custom errors can be created using the generator with <code>name</code> being the only required attribute.</p>
+<pre><code class="js">generator(attributes [, ParentError]);
+</code></pre>
+
+<h4 id="example_2">Example</h4>
+<pre><code class="js">const { generator } = require('eraz');
+
+const CustomError = generator({
+    name: 'CustomError',
+    foo: 'bar'
+});
+</code></pre>
+
+<h4 id="example_3">Example</h4>
+<pre><code class="js">const { generator, NotFoundError } = require('eraz');
+
+const CustomError = generator({
+    name: 'CustomError',
+    foo: 'bar'
+}, NotFoundError);
+
+if (false) throw new CustomError('Handled as a 400 but with the foo attribute included.');
+</code></pre>
+
+<h2 id="contributtions">Contributtions</h2>
+<p>PR's welcome on <a href="https://github.com/toddpla/eraz/pulls">github</a>.</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -156,5 +270,5 @@ docs/
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-04-18 08:00:14
+Build Date UTC : 2019-04-18 09:10:36
 -->
