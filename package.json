@@ -15,9 +15,9 @@
     "error-handler"
   ],
   "author": "Todd Langford-Archer",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/toddpla/error-handler/issues"
   },
-  "homepage": "https://github.com/toddpla/error-handler#readme"
+  "homepage": "https://toddpla.github.io/eraz/"
 }
