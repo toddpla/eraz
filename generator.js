@@ -6,9 +6,9 @@ module.exports = (classAtts, ParentError = BaseError) => {
     return class extends ParentError {
         constructor(message, initArgs) {
             super(message);
-            if (!typeof(classAtts) === 'object') throw new Error('Class attributes are not an object for class');
+            if (typeof(classAtts) !== 'object') throw new Error('Class attributes are not an object for class');
             Object.assign(this, classAtts);
-            if (initArgs !== undefined && !typeof(initArgs) === 'object') throw new Error('Class attributes passed is not an object.');
+            if (initArgs !== undefined && !typeof(initArgs) !== 'object') throw new Error('Class attributes passed is not an object.');
             Object.assign(this, initArgs);
         }
     };
