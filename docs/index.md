@@ -1,6 +1,11 @@
 # Eraz
 __An error handler for Node code__
 
+## Installation
+```sh
+npm install eraz
+```
+
 ## Usage
 Throw an error at some point during the request/response cycle to be handled by middleware to return the required Http response status code and attributes as JSON.
 
